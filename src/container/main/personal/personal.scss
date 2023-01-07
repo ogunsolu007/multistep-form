@@ -1,0 +1,38 @@
+.personal {
+  display: flex;
+  flex-direction: column;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  color: hsl(213, 96%, 18%);
+}
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 7px 0;
+  border: 1px solid hsl(231, 11%, 63%);
+  outline: none;
+  border-radius: 5px;
+}
+input::placeholder {
+  color: hsl(231, 11%, 63%);
+}
+input:focus{
+    border: 1px solid hsl(243, 100%, 62%);
+}
+label {
+  font-weight: 700;
+  font-size: small;
+}
+.label-error{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    p{
+        color: hsl(354, 84%, 57%);
+        font-size: smaller;
+    }
+}

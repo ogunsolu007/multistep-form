@@ -1,42 +1,86 @@
-import React, { Fragment } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./step.scss";
 
-const steps = [
-  {
-    id: 1,
-    text: " Your info",
-  },
+const Step = ({ steps, currentStep }) => {
+  const [newStep, setNewStep] = useState([]);
+  const stepRef = useRef();
 
-  {
-    id: 2,
-    text: " select plan",
-  },
+  const updateStep = (stepNumber, steps) => {
+    const newSteps = [...steps];
+    let count = 0;
 
-  {
-    id: 3,
-    text: " add-ons",
-  },
+    while (count < newSteps.length) {
+      //current step
+      if (count === stepNumber) {
+        newSteps[count] = {
+          ...newSteps[count],
+          highlighted: true,
+          selected: true,
+          completed: true,
+        };
+        count++;
+      }
 
-  {
-    id: 4,
-    text: " summary",
-  },
-];
+      //step completed
+      else if (count < stepNumber) {
+        newSteps[count] = {
+          ...newSteps[count],
+          highlighted: false,
+          selected: true,
+          completed: true,
+        };
+        count++;
+      }
 
-const Step = () => {
+      //step pending
+      else {
+        newSteps[count] = {
+          ...newSteps[count],
+          highlighted: false,
+          selected: false,
+          completed: false,
+        };
+        count++;
+      }
+    }
+    return newSteps;
+  };
+
+  // create useEffect to keep track of changes in steps and currentStep
+  useEffect(() => {
+    // create object
+    const stepsState = steps.map((step, index) =>
+      Object.assign(
+        {},
+        {
+          description: step,
+          completed: false,
+          highlighted: index === 0 ? true : false,
+          selected: index === 0 ? true : false,
+        }
+      )
+    );
+
+    stepRef.current = stepsState;
+    const current = updateStep(currentStep - 1, stepRef.current);
+    setNewStep(current);
+  }, [steps, currentStep]);
+
+  const displaySteps = newStep.map((step, index) => {
+    return (
+      <div className="step-container" key={index}>
+        <div className="step-number">{index + 1}</div>
+        <div className="step-content">
+          <span>{`step ${index + 1}`}</span>
+          <h5>{step.description}</h5>
+        </div>
+      </div>
+    );
+  });
+
   return (
     <>
-      <div className="step">
-        {steps.map((step) => (
-          <div className="step-container" key={step.id}>
-            <div className="step-number">{step.id}</div>
-            <div className="step-content">
-              <span>{`step ${step.id}`}</span>
-              <h5>{step.text}</h5>
-            </div>
-          </div>
-        ))}
-      </div>
+      <div className="step">{displaySteps}</div>
     </>
   );
 };

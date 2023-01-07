@@ -1,0 +1,25 @@
+.btn-container {
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 70px;
+}
+
+.next-btn {
+  background: hsl(213, 96%, 18%);
+  color: white;
+  border-radius: 5px;
+}
+
+.back-btn {
+  background-color: transparent;
+  color: hsl(231, 11%, 63%);
+}
+
+.btn {
+  border: none;
+  outline: none;
+  text-transform: capitalize;
+  padding: 10px 15px;
+  cursor: pointer;
+}
